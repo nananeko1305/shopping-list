@@ -1,9 +1,11 @@
 import 'checklist_strings_en.dart';
+import 'share_strings_en.dart';
 import 'strings.dart';
 import 'update_strings_en.dart';
 
 /// English translations.
-class StringsEn extends AppStrings with ChecklistStringsEn, UpdateStringsEn {
+class StringsEn extends AppStrings
+    with ChecklistStringsEn, UpdateStringsEn, ShareStringsEn {
   const StringsEn();
 
   @override

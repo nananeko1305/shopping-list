@@ -7,12 +7,12 @@ import '../theme.dart';
 import '../widgets/checklist_item_tile.dart';
 import '../widgets/dialogs.dart';
 import '../widgets/empty_state.dart';
+import '../widgets/framed_icon_button.dart';
 import '../widgets/quick_add_field.dart';
 
-enum _MenuAction { rename, uncheckAll, deleteDone, deleteList }
-
 /// One checklist: tap to check (strike-through), swipe to delete with undo,
-/// quick-add at the bottom.
+/// quick-add at the bottom. A pencil next to the name renames the list; at
+/// the top right one button empties it and a red one deletes it.
 class ChecklistScreen extends StatefulWidget {
   const ChecklistScreen({super.key, required this.listId});
 
@@ -85,34 +85,40 @@ class _ChecklistScreenState extends State<ChecklistScreen> {
       );
   }
 
-  Future<void> _onMenu(_MenuAction action) async {
+  Future<void> _rename(Checklist list) async {
     final scope = AppScope.of(context);
-    final s = scope.strings;
-    final repo = scope.services.checklists;
-    final list = _list!;
-    switch (action) {
-      case _MenuAction.rename:
-        final name = await showNameDialog(
-          context,
-          title: s.renameList,
-          label: s.listNameLabel,
-          initial: list.name,
-        );
-        if (name != null) await _change(() => repo.renameList(list.id, name));
-      case _MenuAction.uncheckAll:
-        await _change(() => repo.uncheckAll(list.id));
-      case _MenuAction.deleteDone:
-        await _change(() => repo.deleteDone(list.id));
-      case _MenuAction.deleteList:
-        final ok = await showConfirmDialog(
-          context,
-          title: s.deleteList,
-          message: s.deleteListMsg(list.name),
-        );
-        if (!ok) return;
-        await repo.deleteList(list.id);
-        if (mounted) Navigator.pop(context);
-    }
+    final name = await showNameDialog(
+      context,
+      title: scope.strings.renameList,
+      label: scope.strings.listNameLabel,
+      initial: list.name,
+    );
+    if (name == null) return;
+    await _change(() => scope.services.checklists.renameList(list.id, name));
+  }
+
+  /// Empties the list for the next shopping trip, after asking.
+  Future<void> _clear(Checklist list) async {
+    final scope = AppScope.of(context);
+    final ok = await showConfirmDialog(
+      context,
+      title: scope.strings.clearList,
+      message: scope.strings.clearListMsg(list.name),
+    );
+    if (!ok) return;
+    await _change(() => scope.services.checklists.clearItems(list.id));
+  }
+
+  Future<void> _deleteList(Checklist list) async {
+    final scope = AppScope.of(context);
+    final ok = await showConfirmDialog(
+      context,
+      title: scope.strings.deleteList,
+      message: scope.strings.deleteListMsg(list.name),
+    );
+    if (!ok) return;
+    await scope.services.checklists.deleteList(list.id);
+    if (mounted) Navigator.pop(context);
   }
 
   @override
@@ -124,30 +130,34 @@ class _ChecklistScreenState extends State<ChecklistScreen> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: Text(list.name),
+        titleSpacing: 0,
+        title: Row(
+          children: [
+            Flexible(child: Text(list.name, overflow: TextOverflow.ellipsis)),
+            const SizedBox(width: 8),
+            FramedIconButton(
+              icon: Icons.edit_outlined,
+              tooltip: s.renameList,
+              onPressed: () => _rename(list),
+            ),
+          ],
+        ),
         actions: [
-          Center(child: Text(s.progress(list.doneCount, list.items.length))),
-          PopupMenuButton<_MenuAction>(
-            onSelected: _onMenu,
-            itemBuilder: (_) => [
-              PopupMenuItem(
-                value: _MenuAction.rename,
-                child: Text(s.renameList),
-              ),
-              PopupMenuItem(
-                value: _MenuAction.uncheckAll,
-                child: Text(s.uncheckAll),
-              ),
-              PopupMenuItem(
-                value: _MenuAction.deleteDone,
-                child: Text(s.deleteDone),
-              ),
-              PopupMenuItem(
-                value: _MenuAction.deleteList,
-                child: Text(s.deleteList),
-              ),
-            ],
+          Text(s.progress(list.doneCount, list.items.length)),
+          const SizedBox(width: 8),
+          FramedIconButton(
+            icon: Icons.restart_alt,
+            tooltip: s.clearList,
+            onPressed: list.items.isEmpty ? null : () => _clear(list),
           ),
+          const SizedBox(width: 8),
+          FramedIconButton(
+            icon: Icons.delete_outline,
+            tooltip: s.deleteList,
+            color: palette(context).danger,
+            onPressed: () => _deleteList(list),
+          ),
+          const SizedBox(width: 12),
         ],
       ),
       body: Column(

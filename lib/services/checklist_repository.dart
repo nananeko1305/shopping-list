@@ -56,15 +56,9 @@ class ChecklistRepository {
   Future<void> deleteItem(String listId, String itemId) =>
       _edit(listId, (list) => list.items.removeWhere((i) => i.id == itemId));
 
-  Future<void> deleteDone(String listId) =>
-      _edit(listId, (list) => list.items.removeWhere((i) => i.done));
-
-  /// Unchecks every item, to reuse a list such as "Za put".
-  Future<void> uncheckAll(String listId) => _edit(listId, (list) {
-    for (final item in list.items) {
-      item.done = false;
-    }
-  });
+  /// Empties the list for the next shopping trip; the list itself stays.
+  Future<void> clearItems(String listId) =>
+      _edit(listId, (list) => list.items.clear());
 
   Future<void> _edit(String listId, void Function(Checklist list) change) =>
       _store.update((data) {
