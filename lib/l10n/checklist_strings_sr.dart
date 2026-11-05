@@ -21,13 +21,14 @@ mixin ChecklistStringsSr implements ChecklistStrings {
   @override
   String get emptyListHint => 'Lista je prazna — dodaj stavku ispod';
   @override
-  String get deleteDone => 'Obriši označene';
-  @override
-  String get uncheckAll => 'Poništi sve';
+  String get clearList => 'Isprazni listu';
   @override
   String get itemDeleted => 'Stavka obrisana';
 
   @override
   String deleteListMsg(String name) =>
       'Lista „$name" i sve njene stavke biće obrisane.';
+  @override
+  String clearListMsg(String name) =>
+      'Sve stavke sa liste „$name" biće obrisane. Lista ostaje.';
 }

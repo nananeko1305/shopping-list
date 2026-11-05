@@ -25,23 +25,20 @@ void main() {
     expect(await texts(list.id), ['mleko', 'hleb']);
   });
 
-  test('toggle, delete checked, uncheck all', () async {
+  test('toggle, then clear keeps an empty list', () async {
     final list = await repo.addList('Za put');
     await repo.addItem(list.id, 'pasoš');
     await repo.addItem(list.id, 'punjač');
-    await repo.addItem(list.id, 'četkica');
     final items = (await repo.byId(list.id))!.items;
 
     await repo.toggleItem(list.id, items[0].id);
-    await repo.toggleItem(list.id, items[1].id);
-    expect((await repo.byId(list.id))!.doneCount, 2);
-
-    await repo.uncheckAll(list.id);
+    expect((await repo.byId(list.id))!.doneCount, 1);
+    await repo.toggleItem(list.id, items[0].id);
     expect((await repo.byId(list.id))!.doneCount, 0);
 
-    await repo.toggleItem(list.id, items[1].id);
-    await repo.deleteDone(list.id);
-    expect(await texts(list.id), ['pasoš', 'četkica']);
+    await repo.clearItems(list.id);
+    expect(await texts(list.id), isEmpty);
+    expect((await repo.lists()).single.name, 'Za put');
   });
 
   test('restoreItem puts a deleted item back in its place', () async {

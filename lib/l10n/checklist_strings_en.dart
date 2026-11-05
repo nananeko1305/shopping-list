@@ -21,13 +21,14 @@ mixin ChecklistStringsEn implements ChecklistStrings {
   @override
   String get emptyListHint => 'The list is empty — add an item below';
   @override
-  String get deleteDone => 'Delete checked';
-  @override
-  String get uncheckAll => 'Uncheck all';
+  String get clearList => 'Empty the list';
   @override
   String get itemDeleted => 'Item deleted';
 
   @override
   String deleteListMsg(String name) =>
       'The list "$name" and all its items will be deleted.';
+  @override
+  String clearListMsg(String name) =>
+      'All items on "$name" will be deleted. The list stays.';
 }

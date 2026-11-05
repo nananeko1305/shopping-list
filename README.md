@@ -12,8 +12,10 @@ made in Reminders were not carried over.
 - **Lists**: any number of named lists (Prodavnica, Za put…), each with its
   progress. Tap to open, long-press to rename or delete.
 - **Items**: quick add with the keyboard staying open. Checked items are struck
-  through. Swipe to delete with undo, "Poništi sve" to reuse a list, "Obriši
-  označene" to clear what was bought.
+  through. Swipe to delete with undo.
+- **List buttons**: a pencil next to the name renames the list. At the top
+  right, "Isprazni listu" deletes every item after asking, and the red trash
+  deletes the whole list after asking.
 - **Settings**: language, theme and the update check.
 
 ## Development

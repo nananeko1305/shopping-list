@@ -10,9 +10,9 @@ mixin ChecklistStrings {
   String get deleteList;
   String get addItemHint;
   String get emptyListHint;
-  String get deleteDone;
-  String get uncheckAll;
+  String get clearList;
   String get itemDeleted;
 
   String deleteListMsg(String name);
+  String clearListMsg(String name);
 }
