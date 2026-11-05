@@ -1,0 +1,43 @@
+name: shopping_list
+description: "Shopping List - Android shopping list app."
+publish_to: 'none'
+
+# The floor for release versions; CI works out the real one from the commit
+# messages (see README, "Release and update notifications").
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.13.3
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  shared_preferences: ^2.5.5
+  firebase_core: ^4.15.0
+  firebase_messaging: ^16.7.0
+  package_info_plus: ^10.2.1
+  url_launcher: ^6.3.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.4
+
+flutter:
+  uses-material-design: true
+
+# App icon, generated from assets/icon (see README, "Icon"):
+#   dart run flutter_launcher_icons
+flutter_launcher_icons:
+  android: true
+  ios: false
+  image_path: "assets/icon/logo.png"
+  min_sdk_android: 24
+  adaptive_icon_background: "assets/icon/logo_background.png"
+  adaptive_icon_foreground: "assets/icon/logo_foreground.png"
+  # logo_foreground.png already keeps the glyph inside the 66dp safe zone;
+  # the tool's default 16% inset would shrink it to two thirds.
+  adaptive_icon_foreground_inset: 0
