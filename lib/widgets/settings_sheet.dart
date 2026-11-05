@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../app_scope.dart';
+import '../screens/share_app_screen.dart';
 import '../theme.dart';
 import 'update_tile.dart';
 
-/// Language, theme and the update check.
+/// Language, theme, sharing the app and the update check.
 Future<void> showSettingsSheet(BuildContext context) =>
     showModalBottomSheet<void>(
       context: context,
@@ -60,6 +61,14 @@ class _SettingsSheet extends StatelessWidget {
               onSelectionChanged: (v) => scope.setThemeMode(v.first),
             ),
             const Divider(height: 32),
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: const Icon(Icons.qr_code_2_rounded),
+              title: Text(s.shareApp),
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute<void>(builder: (_) => const ShareAppScreen()),
+              ),
+            ),
             const UpdateTile(),
           ],
         ),

@@ -1,4 +1,5 @@
 import 'checklist_strings.dart';
+import 'share_strings.dart';
 import 'strings_en.dart';
 import 'strings_sr.dart';
 import 'update_strings.dart';
@@ -7,9 +8,9 @@ import 'update_strings.dart';
 ///
 /// Translations live in one file per language: Serbian (Latin) in
 /// [StringsSr], English in [StringsEn]. Feature strings are declared in their
-/// own contracts ([ChecklistStrings], [UpdateStrings]), each implemented per
-/// language in its own file.
-abstract class AppStrings with ChecklistStrings, UpdateStrings {
+/// own contracts ([ChecklistStrings], [UpdateStrings], [ShareStrings]), each
+/// implemented per language in its own file.
+abstract class AppStrings with ChecklistStrings, UpdateStrings, ShareStrings {
   const AppStrings();
 
   String get localeCode;

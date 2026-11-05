@@ -16,7 +16,8 @@ made in Reminders were not carried over.
 - **List buttons**: a pencil next to the name renames the list. At the top
   right, "Isprazni listu" deletes every item after asking, and the red trash
   deletes the whole list after asking.
-- **Settings**: language, theme and the update check.
+- **Settings**: language, theme, the update check and **Podeli aplikaciju**:
+  a QR code of the download link, plus buttons to copy or send the link.
 
 ## Development
 
