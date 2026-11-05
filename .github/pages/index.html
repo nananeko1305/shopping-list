@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="sr-Latn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shopping List — preuzimanje</title>
+  <link rel="icon" type="image/png" href="logo.png" />
+
+  <!-- The deploy-pages job in release-apk.yml fills in the double-underscore
+       placeholders (download link, version, date), generates qr.svg and
+       copies logo.png from assets/icon. -->
+  <style>
+    :root {
+      --brand: #2E7D57;
+      --brand-dark: #14603F;
+      --accent: #D9534F;
+      --bg: #F3F7F4;
+      --card: #FFFFFF;
+      --text: #1B2A22;
+      --muted: #667068;
+      --border: #DCE8E0;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --brand: #7FD6A8;
+        --brand-dark: #2E7D57;
+        --accent: #FF8A80;
+        --bg: #0F1512;
+        --card: #18211C;
+        --text: #E6F0EA;
+        --muted: #9AA39D;
+        --border: #2A3A31;
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+      padding: 32px 24px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .header img {
+      width: 88px;
+      height: 88px;
+      border-radius: 22px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    }
+
+    .header h1 { margin: 14px 0 4px; font-size: 24px; }
+    .header p { margin: 0; opacity: 0.9; font-size: 14px; }
+
+    .body { padding: 24px; text-align: center; }
+
+    .meta {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .chip {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      background: rgba(127, 127, 127, 0.10);
+      border-radius: 999px;
+      padding: 4px 12px;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      color: #fff;
+      background: var(--brand);
+      text-decoration: none;
+      font-size: 17px;
+      font-weight: 700;
+      padding: 16px;
+      border-radius: 12px;
+      transition: opacity 0.15s, transform 0.15s;
+    }
+
+    .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    .qr {
+      margin: 24px auto 8px;
+      width: 200px;
+      height: 200px;
+      background: #fff;
+      border-radius: 12px;
+      padding: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .qr img { width: 100%; height: 100%; display: block; image-rendering: pixelated; }
+
+    .hint { font-size: 13px; color: var(--muted); margin: 8px 0 0; }
+
+    .note {
+      margin-top: 20px;
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.5;
+      text-align: left;
+      background: rgba(127, 127, 127, 0.06);
+      border-left: 3px solid var(--accent);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+
+    .footer { margin-top: 18px; font-size: 11px; color: var(--muted); }
+  </style>
+</head>
+
+<body>
+  <main class="card">
+    <div class="header">
+      <img src="logo.png" alt="Shopping List logo" />
+      <h1>Shopping List</h1>
+      <p>Liste za kupovinu i put</p>
+    </div>
+
+    <div class="body">
+      <div class="meta">
+        <span class="chip">v__VERSION__</span>
+        <span class="chip">__DATE__</span>
+      </div>
+
+      <a class="btn" href="__DOWNLOAD_URL__" download>📲 Preuzmi za Android</a>
+
+      <div class="qr">
+        <img src="qr.svg" alt="QR kod za preuzimanje aplikacije" />
+      </div>
+
+      <p class="hint">Skeniraj QR kod telefonom da preuzmeš APK</p>
+
+      <div class="note">
+        <strong>Instalacija:</strong>
+        otvori preuzeti <code>.apk</code> na telefonu i dozvoli instalaciju iz
+        nepoznatih izvora ako telefon pita. Pri prvom pokretanju dozvoli
+        notifikacije, da bi te app obavestio o novoj verziji.
+      </div>
+
+      <div class="footer">Shopping List · automatski build</div>
+    </div>
+  </main>
+</body>
+</html>
